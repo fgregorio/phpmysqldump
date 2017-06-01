@@ -8,7 +8,7 @@
 git clone git@github.com:fgregorio/phpmysqldump.git
 
 # HTTPS:
-https://gabrieldarezzo@bitbucket.org/fgregorio/phpmysqldump.git
+git clone https://github.com/fgregorio/phpmysqldump.git
 
 cd phpmysqldump  
 php phpmysqldump.php
