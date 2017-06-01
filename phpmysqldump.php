@@ -1,7 +1,7 @@
 <?php
 
 if (php_sapi_name() == "cli") {
-
+	
     $config = array(
         'mysql' => array(
 			'h' => 'localhost'
@@ -14,13 +14,16 @@ if (php_sapi_name() == "cli") {
 			,'B' => 'test'
 		)
     );
-
-    $file = 'dump/'.date('Y.m.d.H.i.s').'.sql';
+	
+	if(!file_exists('dump')){
+		mkdir('dump');
+	}	
+	
+    $file = 'dump' . DIRECTORY_SEPARATOR . date('Y.m.d.H.i.s').'.sql';
 	
 	if((!isset($config)) || sizeof($config)==0){
 		die(PHP_EOL."Please edit \$config var");
 	}
-
     echo "Choise your option, between 1 and ".sizeof($config);
 	
 	$i = 1;
@@ -28,12 +31,12 @@ if (php_sapi_name() == "cli") {
 		echo PHP_EOL.($i)." -> ".($key);
 		$i++;
 	}
-
     echo PHP_EOL."Your choice: ";
     echo PHP_EOL;
-
     $handle = fopen ("php://stdin","r");
     $choice = fgets($handle);
+	
+	
 	
 	$i = 1;
 	foreach($config as $item){	
@@ -47,6 +50,8 @@ if (php_sapi_name() == "cli") {
 					$cmd .= ' -'.$key.' '.$val;
 				}				
 			}
+			PRINT $cmd.' > '.$file;
+			
 			exec($cmd.' > '.$file);			
 			break;
 		}	
@@ -57,7 +62,5 @@ if (php_sapi_name() == "cli") {
         echo PHP_EOL."Ok, file: ";
         echo PHP_EOL.$file;
     }
-
     echo PHP_EOL;
-
 }
